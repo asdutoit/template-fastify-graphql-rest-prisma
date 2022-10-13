@@ -1,0 +1,16 @@
+GET http://localhost:3000 HTTP/1.1
+Content-Type: application/json
+
+###
+
+GET http://localhost:3000/shipwrecks HTTP/1.1
+Content-Type: application/json
+
+###
+
+POST http://localhost:3000/gr
+X-REQUEST-TYPE: GraphQL
+
+query ($x: Int!, $y: Int!){
+  add(x: 1, y: 6)
+}
