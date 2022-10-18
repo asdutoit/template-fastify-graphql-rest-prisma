@@ -1,42 +1,58 @@
 import Fastify from "fastify";
+import AutoLoad from "@fastify/autoload";
+import Sensible from "@fastify/sensible";
+import Env from "@fastify/env";
+import Cors from "@fastify/cors";
+import S from "fluent-json-schema";
+import { join } from "desm";
 import routes from "./routes/index.js";
-import mercurius from "mercurius";
-import prismaPlugin from "./plugins/prisma.js";
-import authPlugin from "./plugins/authentication.js";
-import { schema, resolvers } from "./graphql/index.js";
-import { prismaForGraphQL } from "./plugins/prisma.js";
-import fjwt from "@fastify/jwt";
+import fastifyPrintRoutes from "fastify-print-routes";
+import userRoutes from "./modules/users/users.routes.js";
+
+const envSchema = S.object()
+  .prop("NODE_ENV", S.string().required())
+  .prop("JWT_SECRET", S.string().required())
+  .valueOf();
+
+const options = {
+  schema: envSchema,
+  dotenv: true,
+};
 
 const envToLogger = {
   development: {
     transport: {
       target: "pino-pretty",
       options: {
+        translateTime: "HH:MM:ss Z",
+        ignore: "pid,hostname",
         colorize: true,
-        singleLine: true,
+        singleLine: false,
       },
     },
     production: true,
     test: false,
   },
 };
-
 const fastify = Fastify({
-  logger: envToLogger[process.env.environment] ?? true,
+  logger: envToLogger[process.env.NODE_ENV] ?? true,
 });
 
-fastify.register(fjwt, { secret: process.env.JWT_SECRET });
-fastify.register(mercurius, {
-  schema,
-  resolvers,
-  context: (request, reply) => {
-    return { prismaForGraphQL };
-  },
-  graphiql: eval(process.env.GRAPHQLCLIENT),
-});
-fastify.register(prismaPlugin);
-fastify.register(authPlugin);
-fastify.register(routes);
+fastify
+  .register(Env, options)
+  .register(Sensible)
+  .register(AutoLoad, {
+    dir: join(import.meta.url, "plugins"),
+  })
+  .register(routes)
+  .register(userRoutes)
+  .ready((err) => {
+    if (err) console.error(err);
+
+    // console.log(fastify.config);
+  });
+
+fastify.decorateRequest("fastify", fastify);
 
 const start = async () => {
   try {

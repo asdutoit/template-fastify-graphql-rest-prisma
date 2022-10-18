@@ -1,0 +1,26 @@
+import fastifySwaggerUi from "@fastify/swagger-ui";
+import fp from "fastify-plugin";
+
+async function swaggerui(fastify, opts) {
+  fastify.register(fastifySwaggerUi, {
+    routePrefix: "/documentation",
+    uiConfig: {
+      docExpansion: "full",
+      deepLinking: false,
+    },
+    uiHooks: {
+      onRequest: function (request, reply, next) {
+        next();
+      },
+      preHandler: function (request, reply, next) {
+        next();
+      },
+    },
+    staticCSP: true,
+    transformStaticCSP: (header) => header,
+  });
+}
+
+export default fp(swaggerui, {
+  name: "swaggerui",
+});
