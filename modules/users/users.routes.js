@@ -1,53 +1,13 @@
 import { registerUser, getAllUsers } from "./users.controller.js";
-import { userCore, userSchema } from "./users.schemas.js";
+import { userCore, userSchema, registerSchema } from "./users.schemas.js";
 import S from "fluent-json-schema";
 
 async function userRoutes(fastify, options, next) {
-  console.log("Schemas **************: userCore", JSON.stringify(userSchema));
+  fastify.get("/", async (request, reply) => {
+    return { hello: "worlds" };
+  });
+  fastify.post("/register", registerSchema, registerUser);
 
-  const schemaDefault = S.object()
-    .prop("name", S.string())
-    .prop("excitement", S.integer());
-  fastify.get(
-    "/",
-    {
-      schema: {
-        response: {
-          200: {
-            type: "object",
-            properties: {
-              hello: { type: "string" },
-            },
-          },
-        },
-      },
-    },
-    async (request, reply) => {
-      return { hello: "worlds" };
-    }
-  );
-  fastify.post(
-    "/register",
-    {
-      schema: {
-        body: {
-          type: "object",
-          required: ["name"],
-          properties: {
-            name: { type: "string" },
-            email: { type: "string" },
-            password: { type: "string" },
-          },
-        },
-        response: {
-          201: S.object()
-            .prop("created", S.boolean())
-            .prop("token", S.string()),
-        },
-      },
-    },
-    registerUser
-  );
   fastify.get(
     "/allusers",
     {

@@ -51,8 +51,6 @@ async function routes(fastify, options) {
     }
   );
 
-  fastify.get("/shipwrecksredis", (request, reply) => {});
-
   fastify.post("/signup", (request, reply) => {
     // some code
     const { email } = request.body;

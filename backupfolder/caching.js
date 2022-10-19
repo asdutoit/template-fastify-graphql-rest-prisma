@@ -8,12 +8,14 @@ const redis = new IORedis({
   port: 55000,
   username: "default",
   password: "redispw",
+  namespace: "Redis Caching Plugin",
 });
+
 const abcache = abstractCacheRedis({
   useAwait: false,
   driver: {
     name: "abstract-cache-redis",
-    options: { client: redis },
+    options: { client: redis, closeClient: true },
   },
 });
 

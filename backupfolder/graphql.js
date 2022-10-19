@@ -2,7 +2,7 @@ import fp from "fastify-plugin";
 import mercurius from "mercurius";
 import mercuriusCache from "mercurius-cache";
 import { schema, resolvers } from "../graphql/index.js";
-import { prismaForGraphQL } from "./prisma.js";
+import { prismaForGraphQL } from "../plugins/prisma.js";
 import IORedis from "ioredis";
 
 const redis = new IORedis({
@@ -10,6 +10,7 @@ const redis = new IORedis({
   port: 55000,
   username: "default",
   password: "redispw",
+  namespace: "Redis Graphql",
 });
 
 async function graphqPlugin(fastify, opts) {
@@ -35,6 +36,7 @@ async function graphqPlugin(fastify, opts) {
       type: "redis",
       options: {
         client: redis,
+        closeClient: true,
         invalidation: {
           referencesTTL: 60,
         },

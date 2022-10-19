@@ -5,6 +5,20 @@ const ROLES = {
   USER: "USER",
 };
 
+const registerBodySchema = S.object()
+  .prop("name", S.string().required())
+  .prop("email", S.string().minLength(8).required())
+  .prop("password", S.string().minLength(8).required())
+  .prop("role", S.string().enum(Object.values(ROLES)).default(ROLES.USER));
+
+const registerResponseSchema = S.object().prop("token", S.string());
+const registerSchema = {
+  schema: {
+    response: { 200: registerResponseSchema },
+    body: registerBodySchema,
+  },
+};
+
 // User schema
 const userCore = S.object()
   .prop("email", S.string())
@@ -18,4 +32,4 @@ const userSchema = S.object()
   .prop("updatedAt", S.string().format("time"))
   .extend(userCore);
 
-export { userCore, userSchema };
+export { userCore, userSchema, registerSchema };

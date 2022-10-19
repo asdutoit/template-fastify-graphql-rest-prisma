@@ -13,11 +13,15 @@ async function createUser(input, prisma) {
         salt,
         password: hashedPassword,
       },
+      select: {
+        email: true,
+        name: true,
+        role: true,
+      },
     });
-    console.log("user", user);
     return user;
   } catch (error) {
-    console.log("Create user error", error);
+    throw Error(error);
   }
 }
 

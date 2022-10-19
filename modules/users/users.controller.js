@@ -1,13 +1,14 @@
 import { createUser, getUsers } from "./users.service.js";
 
 export async function registerUser(request, reply) {
-  const { prisma } = request.fastify;
+  const { prisma, jwt } = request;
   const user = await createUser({ ...request.body }, prisma);
-  reply.send({ user });
+  const token = await jwt.sign(user);
+  reply.send({ token });
 }
 
 export async function getAllUsers(request, reply) {
-  const { prisma } = request.fastify;
+  const { prisma } = request;
   const users = await getUsers(prisma);
   reply.send({ users });
 }
