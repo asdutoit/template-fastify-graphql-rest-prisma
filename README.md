@@ -1,0 +1,1 @@
+[![Node.js CI](https://github.com/asdutoit/template-fastify-graphql-rest-prisma/actions/workflows/node.js.yml/badge.svg)](https://github.com/asdutoit/template-fastify-graphql-rest-prisma/actions/workflows/node.js.yml)
