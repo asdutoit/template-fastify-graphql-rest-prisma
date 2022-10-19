@@ -2,7 +2,7 @@ import fp from "fastify-plugin";
 import mercurius from "mercurius";
 import mercuriusCache from "mercurius-cache";
 import { schema, resolvers } from "../graphql/index.js";
-import { prismaForGraphQL } from "../plugins/prisma.js";
+import { prismaForGraphQL } from "./prisma.js";
 import IORedis from "ioredis";
 
 const redis = new IORedis({
