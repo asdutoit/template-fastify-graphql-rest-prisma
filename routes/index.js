@@ -1,12 +1,3 @@
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-
-/**
- * Encapsulates the routes
- * @param {FastifyInstance} fastify  Encapsulated Fastify Instance
- * @param {Object} options plugin options, refer to https://www.fastify.io/docs/latest/Reference/Plugins/#plugin-options
- */
-
 async function routes(fastify, options) {
   // fastify.get("/", async (request, reply) => {
   //   return { hello: "world" };
@@ -24,6 +15,7 @@ async function routes(fastify, options) {
     },
     (request, reply) => {
       fastify.cache.get("shipwrecks", (err, val) => {
+        console.log("cache reached 1", val);
         if (err) return reply.send(err);
         if (val) {
           const { item } = val;
@@ -50,13 +42,6 @@ async function routes(fastify, options) {
       });
     }
   );
-
-  fastify.post("/signup", (request, reply) => {
-    // some code
-    const { email } = request.body;
-    const token = fastify.jwt.sign({ email }, process.env.JWT_SECRET);
-    reply.send({ token });
-  });
 }
 
 export default routes;

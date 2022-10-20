@@ -38,6 +38,7 @@ export function build(opts = {}) {
     // Adding the Prisma client to the request
     request.prisma = app.prisma;
     request.jwt = app.jwt;
+    request.cache = app.cache;
     return next();
   });
 

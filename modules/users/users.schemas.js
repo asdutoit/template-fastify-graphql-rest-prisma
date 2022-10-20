@@ -5,6 +5,13 @@ const ROLES = {
   USER: "USER",
 };
 
+const allUsersResponseSchema = S.object().prop("email", S.string());
+const allUsersSchema = {
+  schema: {
+    response: { 200: allUsersResponseSchema },
+  },
+};
+
 const registerBodySchema = S.object()
   .prop("name", S.string().required())
   .prop("email", S.string().minLength(8).required())
@@ -32,4 +39,4 @@ const userSchema = S.object()
   .prop("updatedAt", S.string().format("time"))
   .extend(userCore);
 
-export { userCore, userSchema, registerSchema };
+export { userCore, userSchema, registerSchema, allUsersSchema };

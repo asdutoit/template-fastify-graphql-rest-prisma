@@ -1,6 +1,5 @@
 // import { userCore, userSchema } from "./users.schemas.js";
 import bcrypt from "bcryptjs";
-import { ReplyError } from "ioredis";
 
 async function createUser(input, prisma) {
   const { password, ...rest } = input;
@@ -40,7 +39,11 @@ async function deleteuser(input, prisma) {
 }
 
 async function getUsers(prisma) {
-  const users = await prisma.user.findMany({});
+  const users = await prisma.user.findMany({
+    select: {
+      email: true,
+    },
+  });
   return users;
 }
 
