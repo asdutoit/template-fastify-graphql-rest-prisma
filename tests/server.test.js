@@ -21,6 +21,7 @@ test("create new user", async (t) => {
   let pattern = /^([a-zA-Z0-9_=]+)\.([a-zA-Z0-9_=]+)\.([a-zA-Z0-9_\-\+\/=]*)/;
   const fastify = build();
 
+  // fastify.addHook("onClose", () => redis.quit());
   t.teardown(() => {
     fastify.close();
   });

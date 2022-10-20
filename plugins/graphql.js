@@ -5,15 +5,14 @@ import { schema, resolvers } from "../graphql/index.js";
 import { prismaForGraphQL } from "./prisma.js";
 import IORedis from "ioredis";
 
-const redis = new IORedis({
-  host: "127.0.0.1",
-  port: 55000,
-  username: "default",
-  password: "redispw",
-  namespace: "Redis Graphql",
-});
-
-async function graphqPlugin(fastify, opts) {
+async function graphqPlugin(fastify, opts, done) {
+  const redis = new IORedis({
+    host: "127.0.0.1",
+    port: 55000,
+    username: "default",
+    password: "redispw",
+    namespace: "Redis Graphql",
+  });
   fastify.register(mercurius, {
     schema,
     resolvers,
@@ -22,9 +21,9 @@ async function graphqPlugin(fastify, opts) {
     },
     graphiql: eval(process.env.GRAPHQLCLIENT),
   });
-  fastify.addHook("onClose", () => redis.quit());
+  // fastify.addHook("onClose", () => redis.quit());
   // ===========  Cache for GRAPHQL  ===========
-
+  fastify.addHook("onClose", () => redis.quit());
   fastify.register(mercuriusCache, {
     ttl: 10,
     policy: {
@@ -61,6 +60,8 @@ async function graphqPlugin(fastify, opts) {
       console.table(report);
     },
   });
+
+  done();
 }
 
 export default fp(graphqPlugin, {

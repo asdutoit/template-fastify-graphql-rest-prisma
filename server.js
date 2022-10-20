@@ -25,8 +25,8 @@ const start = async () => {
     await fastify.listen({ port: 3000 });
   } catch (error) {
     fastify.log.error(error);
-    process.exit(1);
     console.log("Server was shutdown");
+    process.exit(1);
   }
 };
 
