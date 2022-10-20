@@ -22,7 +22,7 @@ async function graphqPlugin(fastify, opts) {
     },
     graphiql: eval(process.env.GRAPHQLCLIENT),
   });
-
+  fastify.addHook("onClose", () => redis.quit());
   // ===========  Cache for GRAPHQL  ===========
 
   fastify.register(mercuriusCache, {

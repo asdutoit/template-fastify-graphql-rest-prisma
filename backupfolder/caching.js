@@ -21,6 +21,7 @@ const abcache = abstractCacheRedis({
 
 async function cachingPlugin(fastify, opts) {
   // ===========  Cache for the RESTAPI  ===========
+  fastify.addHook("onClose", () => redis.quit());
   fastify.register(
     fastifyCaching,
     {

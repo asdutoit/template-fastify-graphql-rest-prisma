@@ -11,6 +11,7 @@ const redis = new IORedis({
 });
 
 async function redisPlugin(fastify, opts) {
+  fastify.addHook("onClose", () => redis.quit());
   fastify.register(fastifyRedis, { client: redis, closeClient: true });
 }
 

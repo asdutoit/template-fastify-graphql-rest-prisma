@@ -1,4 +1,4 @@
-import { registerUser, getAllUsers } from "./users.controller.js";
+import { registerUser, getAllUsers, deleteUser } from "./users.controller.js";
 import { userCore, userSchema, registerSchema } from "./users.schemas.js";
 import S from "fluent-json-schema";
 
@@ -7,6 +7,7 @@ async function userRoutes(fastify, options, next) {
     return { hello: "worlds" };
   });
   fastify.post("/register", registerSchema, registerUser);
+  fastify.post("/deleteuser", deleteUser);
 
   fastify.get(
     "/allusers",

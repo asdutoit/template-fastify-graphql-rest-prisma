@@ -1,4 +1,4 @@
-import { createUser, getUsers } from "./users.service.js";
+import { createUser, getUsers, deleteuser } from "./users.service.js";
 
 export async function registerUser(request, reply) {
   const { prisma, jwt } = request;
@@ -8,7 +8,13 @@ export async function registerUser(request, reply) {
 }
 
 export async function getAllUsers(request, reply) {
-  const { prisma } = request;
+  const { prisma, query } = request;
   const users = await getUsers(prisma);
-  reply.send({ users });
+  reply.send({ users, query });
+}
+
+export async function deleteUser(request, reply) {
+  const { prisma } = request;
+  const user = await deleteuser({ ...request.body }, prisma);
+  reply.send({ user });
 }

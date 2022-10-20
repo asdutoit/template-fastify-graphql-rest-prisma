@@ -25,9 +25,23 @@ async function createUser(input, prisma) {
   }
 }
 
+async function deleteuser(input, prisma) {
+  const { email } = input;
+  try {
+    const res = await prisma.user.delete({
+      where: {
+        email,
+      },
+    });
+    return res;
+  } catch (error) {
+    throw Error(error);
+  }
+}
+
 async function getUsers(prisma) {
   const users = await prisma.user.findMany({});
   return users;
 }
 
-export { createUser, getUsers };
+export { createUser, getUsers, deleteuser };
