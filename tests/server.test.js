@@ -36,6 +36,7 @@ test("create new user", async (t) => {
     },
   });
   const tokenreponse = JSON.parse(response.body);
+  console.log("USER CREATED ^^^^^^^^^^^^^:", tokenreponse);
   t.equal(response.statusCode, 200);
   t.match(tokenreponse.token, pattern, "The token is valid");
 
