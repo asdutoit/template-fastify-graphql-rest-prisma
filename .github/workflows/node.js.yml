@@ -32,4 +32,7 @@ jobs:
           NODE_ENV: ${{secrets.NODE_ENV}}
           DATABASE_URL: ${{secrets.DATABASE_URL}}
           JWT_SECRET: ${{secrets.JWT_SECRET}}
+          REDIS_URL: ${{secrets.REDIS_URL}}
+          REDIS_PORT: ${{secrets.REDIS_PORT}}
+          REDIS_PASSWORD: ${{secrets.REDIS_PASSWORD}}
       - run: npm run build --if-present

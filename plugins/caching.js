@@ -5,10 +5,10 @@ import IORedis from "ioredis";
 
 async function cachingPlugin(fastify, opts) {
   const redis = new IORedis({
-    host: "127.0.0.1",
-    port: 55000,
+    host: process.env.REDIS_URL,
+    port: process.env.REDIS_PORT,
     username: "default",
-    password: "redispw",
+    password: process.env.REDIS_PASSWORD,
     namespace: "Redis Caching Plugin",
   });
   const abcache = abstractCacheRedis({
