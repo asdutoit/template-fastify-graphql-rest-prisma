@@ -16,9 +16,14 @@ const registerBodySchema = S.object()
   .prop("name", S.string().required())
   .prop("email", S.string().minLength(8).required())
   .prop("password", S.string().minLength(8).required())
-  .prop("role", S.string().enum(Object.values(ROLES)).default(ROLES.USER));
+  .prop("role", S.string().enum(Object.values(ROLES)).default(ROLES.USER))
+  .prop("id", S.string());
 
-const registerResponseSchema = S.object().prop("token", S.string());
+const registerResponseSchema = S.object()
+  .prop("token", S.string())
+  .prop("email", S.string())
+  .prop("id", S.string());
+
 const registerSchema = {
   schema: {
     response: { 200: registerResponseSchema },

@@ -16,6 +16,7 @@ async function createUser(input, prisma) {
         email: true,
         name: true,
         role: true,
+        id: true,
       },
     });
     return user;
@@ -25,11 +26,12 @@ async function createUser(input, prisma) {
 }
 
 async function deleteuser(input, prisma) {
-  const { email } = input;
+  const { email, id } = input;
+  console.log("DELETE USER SERVICE ", email, id);
   try {
     const res = await prisma.user.delete({
       where: {
-        email,
+        id,
       },
     });
     return res;

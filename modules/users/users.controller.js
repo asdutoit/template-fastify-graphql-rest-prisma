@@ -4,7 +4,7 @@ export async function registerUser(request, reply) {
   const { prisma, jwt } = request;
   const user = await createUser({ ...request.body }, prisma);
   const token = await jwt.sign(user);
-  reply.send({ token });
+  reply.send({ token, id: user.id, email: user.email });
 }
 
 export async function getAllUsers(request, reply) {
