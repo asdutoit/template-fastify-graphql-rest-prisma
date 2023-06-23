@@ -9,7 +9,7 @@ async function graphqPlugin(fastify, opts, done) {
   const redis = new IORedis({
     host: process.env.REDIS_URL,
     port: process.env.REDIS_PORT,
-    username: "default",
+    username: process.env.REDIS_USERNAME,
     password: process.env.REDIS_PASSWORD,
     namespace: "Redis Graphql",
   });

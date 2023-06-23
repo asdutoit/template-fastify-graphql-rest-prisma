@@ -1,3 +1,6 @@
 {
-  "workbench.colorTheme": "Dracula"
+  "workbench.colorCustomizations": {
+    "titleBar.activeBackground": "#ffbf00",
+    "titleBar.activeForeground": "#000000"
+  }
 }

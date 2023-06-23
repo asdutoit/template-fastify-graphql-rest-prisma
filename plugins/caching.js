@@ -7,12 +7,13 @@ async function cachingPlugin(fastify, opts) {
   const redis = new IORedis({
     host: process.env.REDIS_URL,
     port: process.env.REDIS_PORT,
-    username: "default",
+    username: process.env.REDIS_USERNAME,
     password: process.env.REDIS_PASSWORD,
     namespace: "Redis Caching Plugin",
   });
+  fastify.log.info({actor: "Redis Caching Plugin"}, redis.status);
   const abcache = abstractCacheRedis({
-    useAwait: false,
+    useAwait: true,
     driver: {
       name: "abstract-cache-redis",
       options: { client: redis, closeClient: true },
@@ -24,7 +25,7 @@ async function cachingPlugin(fastify, opts) {
     fastifyCaching,
     {
       privacy: "public",
-      expiresIn: 100,
+      expiresIn: 100000,
       cache: abcache,
     },
     (error) => {

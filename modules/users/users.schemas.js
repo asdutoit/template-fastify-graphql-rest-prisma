@@ -5,7 +5,10 @@ const ROLES = {
   USER: "USER",
 };
 
-const allUsersResponseSchema = S.object().prop("email", S.string());
+const allUsersResponseSchema = S.object()
+  .prop("users", S.array().items(S.object().prop("email", S.string())))
+  
+
 const allUsersSchema = {
   schema: {
     response: { 200: allUsersResponseSchema },

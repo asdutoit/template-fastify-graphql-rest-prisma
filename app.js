@@ -12,6 +12,11 @@ import userRoutes from "./modules/users/users.routes.js";
 const envSchema = S.object()
   .prop("NODE_ENV", S.string().required())
   .prop("JWT_SECRET", S.string().required())
+  .prop("REDIS_URL", S.string().required())
+  .prop("REDIS_PORT", S.string().required())
+  .prop("REDIS_PASSWORD", S.string().required())
+  .prop("DATABASE_URL", S.string().required())
+  .prop("REDIS_USERNAME", S.string().required())
   .valueOf();
 
 const options = {

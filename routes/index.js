@@ -32,7 +32,7 @@ async function routes(fastify, options) {
             fastify.cache.set(
               "shipwrecks",
               { shipwrecks: response },
-              10000,
+              100000,
               (err) => {
                 if (err) return reply.send(err);
                 reply.send({ shipwrecks: response });
