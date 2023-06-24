@@ -8,13 +8,15 @@ const prismaPlugin = fp(async (server, options) => {
     await prisma.$connect();
 
     server.decorate("prisma", prisma);
-    server.log.info({ actor: "MongoDB" }, "connected");
+    // server.log.info({ actor: "MongoDB" }, "connected");
+    server.log.info({ actor: "Postgresql" }, "connected");
 
     server.addHook("onClose", async (server) => {
       await server.prisma.$disconnect();
     });
   } catch (error) {
-    server.log.error({ actor: "MongoDB" }, "disconnected");
+    // server.log.error({ actor: "MongoDB" }, "disconnected");
+    server.log.error({ actor: "Postgresql" }, "disconnected");
   }
 });
 

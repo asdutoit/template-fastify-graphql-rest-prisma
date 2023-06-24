@@ -19,7 +19,7 @@
     "@fastify/sensible": "^5.1.1",
     "@fastify/swagger": "^8.0.0",
     "@fastify/swagger-ui": "^1.1.0",
-    "@prisma/client": "^4.5.0",
+    "@prisma/client": "^4.16.1",
     "abstract-cache": "^1.0.1",
     "abstract-cache-redis": "^2.0.0",
     "bcryptjs": "^2.4.3",

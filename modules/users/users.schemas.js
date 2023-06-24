@@ -10,9 +10,15 @@ const allUsersResponseSchema = S.object().prop(
   S.array().items(S.object().prop("email", S.string()))
 );
 
+const headersJsonSchema = S.object().prop(
+  "Authorization",
+  S.string().required()
+);
+
 const allUsersSchema = {
   schema: {
     response: { 200: allUsersResponseSchema },
+    // headers: headersJsonSchema,
   },
 };
 
@@ -25,7 +31,8 @@ const loginResponseSchema = S.object()
   .prop("token", S.string())
   .prop("email", S.string())
   .prop("role", S.string())
-  .prop("id", S.string());
+  // .prop("id", S.string());  // MongoDB
+  .prop("id", S.integer());
 
 const loginSchema = {
   schema: {
@@ -39,16 +46,18 @@ const registerBodySchema = S.object()
   .prop("email", S.string().minLength(8).required())
   .prop("password", S.string().minLength(8).required())
   .prop("role", S.string().enum(Object.values(ROLES)).default(ROLES.USER))
-  .prop("id", S.string());
+  // .prop("id", S.string());  // Use for MongoDB,
+  .prop("id", S.integer()); // Use for Postgresql (auto increment
 
 const registerResponseSchema = S.object()
   .prop("token", S.string())
   .prop("email", S.string())
-  .prop("id", S.string());
+  // .prop("id", S.string());  // Use for MongoDB,
+  .prop("id", S.integer()); // Use for Postgresql (auto increment
 
 const registerSchema = {
   schema: {
-    response: { 200: registerResponseSchema },
+    response: { 201: registerResponseSchema },
     body: registerBodySchema,
   },
 };
@@ -61,7 +70,8 @@ const userCore = S.object()
   .prop("role", S.string().enum(Object.values(ROLES)).default(ROLES.USER));
 
 const userSchema = S.object()
-  .prop("id", S.string())
+  // .prop("id", S.string())
+  .prop("id", S.integer())
   .prop("createdAt", S.string().format("time"))
   .prop("updatedAt", S.string().format("time"))
   .extend(userCore);
