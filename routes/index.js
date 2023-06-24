@@ -13,33 +13,24 @@ async function routes(fastify, options) {
     {
       onRequest: [fastify.authenticate],
     },
-    (request, reply) => {
-      fastify.cache.get("shipwrecks", (err, val) => {
-        console.log("cache reached 1", val);
-        if (err) return reply.send(err);
-        if (val) {
-          const { item } = val;
-          return reply.send(item);
-        }
-
-        fastify.prisma.shipwrecks
-          .findMany({
+    async (request, reply) => {
+      try {
+        const result = await fastify.cache.get("shipwrecks");
+        if (result) {
+          const { item } = result;
+          return reply.send({ cache: "Hit", item });
+        } else {
+          const shipwrecks = await fastify.prisma.shipwrecks.findMany({
             where: {
               feature_type: "Wrecks - Submerged, nondangerous",
             },
-          })
-          .then((response) => {
-            fastify.cache.set(
-              "shipwrecks",
-              { shipwrecks: response },
-              100000,
-              (err) => {
-                if (err) return reply.send(err);
-                reply.send({ shipwrecks: response });
-              }
-            );
           });
-      });
+          await fastify.cache.set("shipwrecks", { shipwrecks }, 100000);
+          return reply.send({ cache: "Miss", shipwrecks });
+        }
+      } catch (error) {
+        reply.send(error);
+      }
     }
   );
 }

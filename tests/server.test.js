@@ -10,11 +10,11 @@ test("requests to healthcheck route", async (t) => {
 
   const response = await fastify.inject({
     method: "GET",
-    url: "/",
+    url: "/healthcheck",
   });
 
   t.equal(response.statusCode, 200);
-  t.same(response.json(), { hello: "worlds" });
+  t.same(response.json(), { status: "OK" });
 });
 
 test("create new user", async (t) => {
@@ -36,7 +36,6 @@ test("create new user", async (t) => {
     },
   });
   const responseBody = JSON.parse(response.body);
-  console.log("USER CREATED ^^^^^^^^^^^^^:", responseBody);
   t.equal(response.statusCode, 200);
   t.match(responseBody.token, pattern, "The token is valid");
 
@@ -52,8 +51,6 @@ test("create new user", async (t) => {
       id: responseBody.id,
     },
   });
-
-  console.log("DELETEDUSER ^^^^^^^^: ", deleteResponse.body);
 
   t.equal(response.statusCode, 200);
   t.match(responseBody.token, pattern, "The token is valid");

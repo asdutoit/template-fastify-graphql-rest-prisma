@@ -8,7 +8,7 @@ const envToLogger = {
         translateTime: "HH:MM:ss Z",
         ignore: "pid,hostname",
         colorize: true,
-        singleLine: false,
+        singleLine: true,
       },
     },
     production: true,
