@@ -43,13 +43,16 @@ jobs:
         with:
           mongodb-version: ${{ matrix.mongodb-version }}
           mongodb-replica-set: "rs0"
+          # mongodb-username: root
+          # mongodb-password: root
+          # mongodb-db: fastify_test
 
       - run: npm ci
       - run: npx prisma generate
       - run: npm test
         env:
           NODE_ENV: ${{secrets.NODE_ENV}}
-          DATABASE_URL: ${{secrets.DATABASE_URL}}
+          DATABASE_URL: ${{secrets.DATABASE_URL_LOCAL}}
           JWT_SECRET: ${{secrets.JWT_SECRET}}
           REDIS_URL: ${{secrets.REDIS_URL}}
           REDIS_PORT: ${{secrets.REDIS_PORT}}
