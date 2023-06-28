@@ -13,7 +13,7 @@ export async function registerUser(request, reply) {
     { email: user.email, role: user.role },
     { expiresIn: 3 * 86400 }
   );
-  reply.send({ token, id: user.id, email: user.email });
+  reply.status(200).send({ token, id: user.id, email: user.email });
 }
 
 export async function loginUser(request, reply) {
