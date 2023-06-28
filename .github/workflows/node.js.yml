@@ -43,9 +43,6 @@ jobs:
         with:
           mongodb-version: ${{ matrix.mongodb-version }}
           mongodb-replica-set: "rs0"
-          # mongodb-username: root
-          # mongodb-password: root
-          # mongodb-db: fastify_test
 
       - run: npm ci
       - run: npx prisma generate
