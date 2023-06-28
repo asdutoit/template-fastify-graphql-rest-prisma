@@ -46,6 +46,6 @@ export function build(opts = {}) {
     request.cache = app.cache;
     return next();
   });
-
+  console.log("===== SERVICE IS ONLINE ====== 🚀");
   return app;
 }

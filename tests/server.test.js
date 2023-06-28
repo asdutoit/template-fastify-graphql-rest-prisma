@@ -40,18 +40,18 @@ test("create new user", async (t) => {
   t.match(responseBody.token, pattern, "The token is valid");
 
   //TODO: Remember to delete the created user from the DB
-  const deleteResponse = await fastify.inject({
-    method: "POST",
-    headers: {
-      authorization: `Bearer ${responseBody.token}`,
-    },
-    url: "/deleteuser",
-    body: {
-      email: "testuser@test.co.za",
-      id: responseBody.id,
-    },
-  });
+  // const deleteResponse = await fastify.inject({
+  //   method: "POST",
+  //   headers: {
+  //     authorization: `Bearer ${responseBody.token}`,
+  //   },
+  //   url: "/deleteuser",
+  //   body: {
+  //     email: "testuser@test.co.za",
+  //     id: responseBody.id,
+  //   },
+  // });
 
-  t.equal(response.statusCode, 200);
-  t.match(responseBody.token, pattern, "The token is valid");
+  // t.equal(response.statusCode, 200);
+  // t.match(responseBody.token, pattern, "The token is valid");
 });
