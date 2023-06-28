@@ -19,9 +19,9 @@ jobs:
         ports:
           - 6379:6379
         options: --name redis-container
-        env:
-          REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
-          REDIS_USERNAME: ${{ secrets.REDIS_USERNAME }}
+        # env:
+        #   REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
+        #   REDIS_USERNAME: ${{ secrets.REDIS_USERNAME }}
 
     strategy:
       matrix:
@@ -44,8 +44,8 @@ jobs:
           JWT_SECRET: ${{secrets.JWT_SECRET}}
           REDIS_URL: ${{secrets.REDIS_URL}}
           REDIS_PORT: ${{secrets.REDIS_PORT}}
-          REDIS_USERNAME: ${{secrets.REDIS_USERNAME}}
-          REDIS_PASSWORD: ${{secrets.REDIS_PASSWORD}}
+          REDIS_USERNAME: ""
+          REDIS_PASSWORD: ""
   build:
     needs: test
     runs-on: ubuntu-latest
