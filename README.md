@@ -13,9 +13,10 @@ You can also use other sql cloud hosted db services like Supabase, Planetscale, 
 This will spin up a Redis Server as well as a Redis Workbench website to view the Redis cache.  You can access the Redis Workbench at `http://localhost:8001/`
 
 3. You need Node.js installed on your machine.  You can download it [here](https://nodejs.org/en/download/).  This template was built using Node.js v18.  You can check your version by running `node -v` in your terminal.
-4. Copy the `.env.example` file to `.env` and update the values to match your environment.  You can use the default values for the MongoDB / Postgresql and Redis Stack database.  If you are using a cloud hosted db service, you will need to update the values to match your environment:  
+4. Prisma is also required, but will be installed as part of the `npm install` script in the `Getting Started` section.   For more information, visit: [Prisma ORM](https://www.prisma.io/)
+5. Copy the `.env.example` file to `.env` and update the values to match your environment.  You can use the default values for the MongoDB / Postgresql and Redis Stack database.  If you are using a cloud hosted db service, you will need to update the values to match your environment:  
 `cp .env.example .env`
-5. OPTIONAL: Seed the MongoDB database.  Run the following command in your terminal:
+6. OPTIONAL: Seed the MongoDB database.  Run the following command in your terminal:
    `node seed.js`
 
 # Getting Started
