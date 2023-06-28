@@ -26,25 +26,26 @@ jobs:
     strategy:
       matrix:
         node-version: [18.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+        mongodb-version: ["6.0"]
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Git Checkout
+        uses: actions/checkout@v3
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
+
+      - name: Start MongoDB
+        uses: supercharge/mongodb-github-action@1.8.0
+        with:
+          mongodb-version: ${{ matrix.mongodb-version }}
+          mongodb-replica-set: "rs0"
+
       - run: npm ci
       - run: npx prisma generate
-      - name: Check MongoDB connection
-        run: |
-          echo "Installing mongodb package..."
-          npm install mongodb
-          echo "Checking MongoDB connection..."
-          node -e "const { MongoClient } = require('mongodb'); MongoClient.connect(${{secrets.DATABASE_URL}}, { useUnifiedTopology: true }, (err, client) => { if (err) { console.error('Failed to connect to MongoDB:', err); process.exit(1); } else { console.log('Connected to MongoDB successfully!'); client.close(); } });"
-        env:
-          DATABASE_URL: ${{secrets.DATABASE_URL}}
       - run: npm test
         env:
           NODE_ENV: ${{secrets.NODE_ENV}}
