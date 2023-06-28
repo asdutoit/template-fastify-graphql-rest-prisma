@@ -19,6 +19,9 @@ jobs:
         ports:
           - 6379:6379
         options: --name redis-container
+        env:
+          REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
+          REDIS_USERNAME: ${{ secrets.REDIS_USERNAME }}
 
     strategy:
       matrix:
