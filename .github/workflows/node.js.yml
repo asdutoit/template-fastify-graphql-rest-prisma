@@ -37,6 +37,10 @@ jobs:
           cache: "npm"
       - run: npm ci
       - run: npx prisma generate
+      - name: Check MongoDB connection
+        run: |
+          echo "Checking MongoDB connection..."
+          node -e "const { MongoClient } = require('mongodb'); MongoClient.connect(process.env.DATABASE_URL, (err, client) => { if (err) { console.error('Failed to connect to MongoDB:', err); process.exit(1); } else { console.log('Connected to MongoDB successfully!'); client.close(); } });"
       - run: npm test
         env:
           NODE_ENV: ${{secrets.NODE_ENV}}
