@@ -41,6 +41,7 @@ jobs:
           JWT_SECRET: ${{secrets.JWT_SECRET}}
           REDIS_URL: ${{secrets.REDIS_URL}}
           REDIS_PORT: ${{secrets.REDIS_PORT}}
+          REDIS_USERNAME: ${{secrets.REDIS_USERNAME}}
           REDIS_PASSWORD: ${{secrets.REDIS_PASSWORD}}
   build:
     needs: test
