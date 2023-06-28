@@ -38,15 +38,11 @@ jobs:
       - run: npm ci
       - run: npx prisma generate
       - name: Check MongoDB connection
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: "npm"
-      - run: |
-          cho "Installing mongodb package..."
+        run: |
+          echo "Installing mongodb package..."
           npm install mongodb
           echo "Checking MongoDB connection..."
-          node -e "const { MongoClient } = require('mongodb'); MongoClient.connect(process.env.DATABASE_URL, { useUnifiedTopology: true }, (err, client) => { if (err) { console.error('Failed to connect to MongoDB:', err); process.exit(1); } else { console.log('Connected to MongoDB successfully!'); client.close(); } });"
+          node -e "const { MongoClient } = require('mongodb'); MongoClient.connect(${{secrets.DATABASE_URL}}, { useUnifiedTopology: true }, (err, client) => { if (err) { console.error('Failed to connect to MongoDB:', err); process.exit(1); } else { console.log('Connected to MongoDB successfully!'); client.close(); } });"
         env:
           DATABASE_URL: ${{secrets.DATABASE_URL}}
       - run: npm test
