@@ -81,6 +81,10 @@ export async function getAllUsers(request, reply) {
 
 export async function deleteUser(request, reply) {
   const { prisma } = request;
-  const user = await deleteuser({ ...request.body }, prisma);
-  reply.status(201).send({ message: "User Deleted Successfully" });
+  try {
+    await deleteuser({ ...request.body }, prisma);
+    reply.status(204).send({ message: "User Deleted Successfully" });
+  } catch (error) {
+    reply.status(500).send({ Error: error.message });
+  }
 }

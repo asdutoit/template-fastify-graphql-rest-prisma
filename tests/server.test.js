@@ -22,9 +22,6 @@ test("create new user", async (t) => {
   const fastify = build();
 
   // fastify.addHook("onClose", () => redis.quit());
-  t.teardown(() => {
-    fastify.close();
-  });
 
   const response = await fastify.inject({
     method: "POST",
@@ -38,4 +35,7 @@ test("create new user", async (t) => {
   const responseBody = JSON.parse(response.body);
   t.equal(response.statusCode, 200);
   t.match(responseBody.token, pattern, "The token is valid");
+  t.teardown(() => {
+    fastify.close();
+  });
 });
