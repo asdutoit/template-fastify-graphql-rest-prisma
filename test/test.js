@@ -65,6 +65,20 @@ describe("Delete the new user", () => {
   });
 
   it("Should return status code 204", async () => {
+    let token;
+
+    const responseLogin = await app.inject({
+      method: "POST",
+      url: "/login",
+      body: {
+        email,
+        password,
+      },
+    });
+    const responseBody = await JSON.parse(responseLogin.body);
+    // console.log("login response", responseBody);
+    token = responseBody.token;
+
     const response = await app.inject({
       method: "POST",
       url: "/deleteuser",
