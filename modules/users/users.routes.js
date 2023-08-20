@@ -4,6 +4,7 @@ import {
   getAllUsers,
   deleteUser,
 } from "./users.controller.js";
+
 import {
   registerSchema,
   allUsersSchema,

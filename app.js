@@ -5,9 +5,10 @@ import Env from "@fastify/env";
 // import Cors from "@fastify/cors";
 import S from "fluent-json-schema";
 import { join } from "desm";
-import routes from "./routes/index.js";
 import fastifyPrintRoutes from "fastify-print-routes";
 import userRoutes from "./modules/users/users.routes.js";
+import shipwrecksRoutes from "./modules/shipwrecks/shipwrecks.routes.js";
+import healthcheckRoutes from "./modules/healthcheck/healthcheck.routes.js";
 
 const envSchema = S.object()
   .prop("NODE_ENV", S.string().required())
@@ -32,8 +33,10 @@ export function build(opts = {}) {
     .register(AutoLoad, {
       dir: join(import.meta.url, "plugins"),
     })
-    .register(routes)
+    // .register(routes)
+    .register(healthcheckRoutes)
     .register(userRoutes)
+    .register(shipwrecksRoutes)
     .ready((err) => {
       if (err) console.error(err);
 
