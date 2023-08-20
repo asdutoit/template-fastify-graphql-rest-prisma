@@ -1,5 +1,7 @@
 import { build } from "../app.js";
 import assert from "assert";
+import { PrismaClient } from "@prisma/client";
+import chalk from "chalk";
 
 let name = "Test User";
 let email = "test@gmail.com";
@@ -26,6 +28,21 @@ describe("Healthcheck is OK", () => {
   });
 });
 
+describe("Prisma MongoDB Connection", function () {
+  it("should connect to MongoDB successfully", async function () {
+    const prisma = new PrismaClient();
+    try {
+      await prisma.$connect();
+      console.log(chalk.green("Connected to MongoDB server")); // Green color for success
+    } catch (error) {
+      console.error(chalk.red("Error connecting to MongoDB:"), error); // Red color for error
+      assert.fail("Failed to connect to MongoDB");
+    } finally {
+      await prisma.$disconnect();
+      console.log(chalk.yellow("Disconnected from MongoDB server")); // Yellow color for disconnection
+    }
+  });
+});
 describe("Create a new user", () => {
   let app;
   before(() => {
