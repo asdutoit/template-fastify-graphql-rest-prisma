@@ -37,7 +37,7 @@ This Fastify Backend Template is a starting point for a backend application that
 The following routes will be exposed:
 
 - `GET /healthcheck` - Returns a 200 status code and response "OK" if the server is running
-- ~~`GET /graphql` - GraphQL Playground`~~
+- `GET /graphiql` - GraphQL Playground. You need to set your ENV variable, GRAPHQLCLIENT to true to enable this route. Example: `GRAPHQLCLIENT=true`
 - `POST /register` - Register a new user
 - `GET /allusers` - Get all users (Auth Required) Add JWT obtained from `/register` route, to the `Authorization` header. Example: `Bearer eyJhb....`
 - `GET /shipwrecks` - Get all shipwrecks (Auth Required) Add JWT obtained from `/register` route, to the `Authorization` header. Example: `Bearer eyJhb....`
