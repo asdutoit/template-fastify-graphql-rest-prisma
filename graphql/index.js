@@ -1,4 +1,15 @@
+import { verifyTokenFromCtx } from "../plugins/jwt.js";
+
 const schema = `
+directive @auth(
+  requires: Role = ADMIN,
+) on OBJECT | FIELD_DEFINITION
+
+enum Role {
+  ADMIN
+  USER
+}
+
 type Query {
   add(x: Int, y: Int): Int
   books: [Book]
@@ -41,6 +52,11 @@ const resolvers = {
     add: async (_, { x, y }) => x + y,
     books: () => books,
     shipwrecks: async (_parent, args, ctx) => {
+      const { userInfo } = ctx;
+      console.log("userInfo", userInfo);
+      if (!userInfo || userInfo === null) {
+        throw new Error("No user found for this Id");
+      }
       return ctx.prismaForGraphQL.shipwrecks.findMany({
         where: {
           feature_type: "Wrecks - Submerged, nondangerous",

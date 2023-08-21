@@ -1,6 +1,7 @@
 import fp from "fastify-plugin";
 import mercurius from "mercurius";
 import mercuriusCache from "mercurius-cache";
+import { verifyToken } from "./jwt.js";
 import { schema, resolvers } from "../graphql/index.js";
 import { prismaForGraphQL } from "./prisma.js";
 import IORedis from "ioredis";
@@ -17,7 +18,10 @@ async function graphqPlugin(fastify, opts, done) {
     schema,
     resolvers,
     context: (request, reply) => {
-      return { prismaForGraphQL };
+      let userInfo = null;
+      if (!request.headers.authorization) return { prismaForGraphQL, userInfo };
+      userInfo = verifyToken(request.headers.authorization);
+      return { prismaForGraphQL, userInfo };
     },
     graphiql: eval(process.env.GRAPHQLCLIENT),
   });
