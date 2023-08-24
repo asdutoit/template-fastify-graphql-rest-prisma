@@ -1,5 +1,7 @@
 [![Node.js CI](https://github.com/asdutoit/template-fastify-graphql-rest-prisma/actions/workflows/node.js.yml/badge.svg)](https://github.com/asdutoit/template-fastify-graphql-rest-prisma/actions/workflows/node.js.yml)
 
+> THIS REPO HAS BEEN DEPRECATED IN FAVOUR OF **template-fastfy-kitchen-sink**
+
 This Fastify Backend Template is a starting point for a backend application that uses Fastify, GraphQL, REST, and Prisma. You can using any Database that Prisma supports. This template is setup to use MongoDB. The `Getting Started` instructions below will guide on setting up a different DB, like Postgresql.
 
 <br />
