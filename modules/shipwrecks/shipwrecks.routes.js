@@ -1,13 +1,4 @@
-async function routes(fastify, options) {
-  // fastify.get("/", async (request, reply) => {
-  //   return { hello: "world" };
-  // });
-
-  fastify.get("/healthcheck", async function (request, response) {
-    request.log.info("healthcheck");
-    return { status: "OK" };
-  });
-
+async function shipwrecksRoutes(fastify, options, next) {
   fastify.get(
     "/shipwrecks",
     {
@@ -33,6 +24,8 @@ async function routes(fastify, options) {
       }
     }
   );
+
+  next();
 }
 
-export default routes;
+export default shipwrecksRoutes;

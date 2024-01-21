@@ -8,6 +8,7 @@ async function authPlugin(fastify, opts, done) {
       reply.send(err);
     }
   });
+
   done();
 }
 

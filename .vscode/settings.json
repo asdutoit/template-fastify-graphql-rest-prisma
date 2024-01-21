@@ -6,5 +6,7 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "editor.fontWeight": "normal",
+  "editor.fontFamily": "Menlo, Monaco, 'Courier New', monospace"
 }

@@ -13,7 +13,7 @@ export async function registerUser(request, reply) {
     { email: user.email, role: user.role },
     { expiresIn: 3 * 86400 }
   );
-  reply.send({ token, id: user.id, email: user.email });
+  reply.status(200).send({ token, id: user.id, email: user.email });
 }
 
 export async function loginUser(request, reply) {
@@ -81,6 +81,10 @@ export async function getAllUsers(request, reply) {
 
 export async function deleteUser(request, reply) {
   const { prisma } = request;
-  const user = await deleteuser({ ...request.body }, prisma);
-  reply.status(201).send({ message: "User Deleted Successfully" });
+  try {
+    await deleteuser({ ...request.body }, prisma);
+    reply.status(204).send({ message: "User Deleted Successfully" });
+  } catch (error) {
+    reply.status(500).send({ Error: error.message });
+  }
 }
