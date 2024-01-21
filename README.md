@@ -8,6 +8,7 @@ This Fastify Backend Template is a starting point for a backend application that
 
 ## Prerequisites
 
+
 1. You need a MongoDB Atlast db. Locally hosted MongoDB is not supported due to how Prisma connects to the db.
    You can also use other sql cloud hosted db services like Supabase, Planetscale, AWS RSA etc.
    > NOTE: If you are using anything other than MongoDB you will need to update the various files including the Prisma schema and route files accordingly.
